@@ -1,0 +1,54 @@
+server:
+  servlet:
+    context-path: /dm
+    session:
+      timeout: 60m
+  port: 17500
+  compression:
+    enabled: true
+    min-response-size: 2048
+    mime-types: application/javascript,application/json,application/xml,text/html,text/xml,text/plain,text/javascript
+spring:
+  application:
+    name: datamanager
+  http:
+    converters:
+      preferred-json-mapper: jackson
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss.SSS
+  servlet:
+    multipart:
+      max-file-size: 4096MB
+      max-request-size: 4096MB
+  datasource:
+    dynamic:
+      primary: master
+      strict: false
+      datasource:
+        # ISCAS local test
+#        master:
+#          url: jdbc:mysql://192.168.100.219:3306/202?useUnicode=true&characterEncoding=UTF8&serverTimezone=Asia/Shanghai&useSSL=false
+#          username: root
+#          password: Isc@s123
+#          driver-class-name: com.mysql.jdbc.Driver
+
+        # 202 deploy
+        master:
+          url: jdbc:mysql://192.168.30.19:3306/202?useUnicode=true&characterEncoding=UTF8&serverTimezone=Asia/Shanghai&useSSL=false
+          username: datasong
+          password: iscas123
+          driver-class-name: com.mysql.jdbc.Driver
+
+
+#        software:
+#          url: jdbc:mysql://192.168.100.209:3306/datasong?useUnicode=true&characterEncoding=UTF8&serverTimezone=Asia/Shanghai&useSSL=false
+#          username: root
+#          password: root
+#          driver-class-name: com.mysql.jdbc.Driver
+
+
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 200
+      max-lifetime: 30000 # 不能小于30秒，否则默认回到1800秒
+      connection-test-query: SELECT 1

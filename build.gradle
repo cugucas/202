@@ -1,0 +1,66 @@
+//plugins {
+//    id 'java'
+//}
+
+group 'cn.ac.iscas'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.2.RELEASE")
+    }
+}
+//plugins {
+//
+//}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'java'
+apply plugin: 'idea'
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    //compile fileTree(dir:'lib', include:'*.jar')
+
+    compile("com.fasterxml.jackson.core:jackson-core:2.9.8")
+    compile("com.fasterxml.jackson.core:jackson-annotations:2.9.8")
+    compile("com.fasterxml.jackson.core:jackson-databind:2.9.8")
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.2.RELEASE'
+    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.10.0'
+
+    implementation group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.1.0'
+    implementation group: 'com.baomidou', name: 'dynamic-datasource-spring-boot-starter', version: '3.1.0'
+    runtime("mysql:mysql-connector-java:5.1.47")
+    compile fileTree(dir:'lib', include:'*.jar')
+
+    //implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.3'
+    //implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.4'
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    baseName = 'bigdatamanager'
+    manifest {
+        attributes(
+                "Manifest-Version": 1.0,
+                "Main-Class": "cn.ac.iscas.BigDataManagerApplication"
+        )
+    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    into('assets') {
+        from 'assets'
+    }
+}
